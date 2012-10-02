@@ -11,12 +11,14 @@
 
 	<properties>
 		<version.tycho>0.14.1</version.tycho>
+		<junit-version>4.8.1</junit-version>
 	</properties>
 
 	<modules>
 		<module>../org.xtext.example.mydsl</module>
 		<module>../org.xtext.example.mydsl.ui</module>
 		<module>../org.xtext.example.mydsl.sdk</module>
+		<module>../org.xtext.example.mydsl.tests</module>
 		<module>../org.xtext.example.mydsl.generator</module>
 	</modules>
 	<build>
@@ -129,6 +131,18 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit-version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
 	<repositories>
 		<!-- Repository to resolve the Eclipse Tycho dependencies --> 
 		<repository>
