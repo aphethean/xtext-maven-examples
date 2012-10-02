@@ -51,6 +51,7 @@ Either downgrade to Java 1.6 or set the Java options to maven:
 	SET MAVEN_OPTS=-Djava.util.Arrays.useLegacyMergeSort=true
 
 The error you would see:
+<pre>
 [ERROR] Internal error: java.lang.IllegalArgumentException: Comparison method violates its general contract! -> [Help 1]
 org.apache.maven.InternalErrorException: Internal error: java.lang.IllegalArgumentException: Comparison method violates its general con
 tract!
@@ -74,6 +75,7 @@ Caused by: java.lang.IllegalArgumentException: Comparison method violates its ge
         at java.util.ComparableTimSort.sort(ComparableTimSort.java:146)
         at java.util.Arrays.sort(Arrays.java:472)
         at org.eclipse.equinox.internal.p2.artifact.repository.MirrorSelector.hasValidMirror(MirrorSelector.java:317)
+</pre>
 
 
 ### OSGi issues
@@ -83,7 +85,7 @@ is to use the Tycho 'target-platform-configuration' plugin.  It can take all you
 those OSGi bundles available to your project.
 
 If you just build without making these depdencies available to OSGi you should get an error similar to the following:
-
+<pre>
 [ERROR] Cannot resolve project dependencies:
 [ERROR]   Software being installed: org.xtext.example.mydsl 1.0.0
 [ERROR]   Missing requirement: org.xtext.example.mydsl 1.0.0 requires 'bundle org.eclipse.xtext 2.1.0' but it could not be found
@@ -114,6 +116,7 @@ clipse.xtext.xbase 2.1.0.", "No solution found because the problem is unsatisfia
         at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:230)
         at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:409)
         at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:352)
+</pre>
 
 
 ### Fornax plugin repository
