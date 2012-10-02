@@ -10,7 +10,10 @@ These projects have been created with the simple XText DSL Project from within E
 The main point is to show how to package and build an XText DSL project with Maven and is more or less an updated version of Karsten's Blog
 entry - http://kthoms.wordpress.com/2010/08/18/building-xtext-projects-with-maven-tycho/
 
-These examples use the xtend-maven-plugin to call the XTend generator, which as I understand are now part of the latest XText versions.
+These examples now use the xtend-maven-plugin to call the XTend generator, which as I understand are now part of the latest XText versions.
+
+Another really good project to look at for an XText maven examples can be found here (https://github.com/ckulla/xtext-tycho-example).  Unfortunately
+I couldn't actually make this example work due to some issue resolving from the maven relative path local repository.
 
 
 ## An explanation and building the examples
