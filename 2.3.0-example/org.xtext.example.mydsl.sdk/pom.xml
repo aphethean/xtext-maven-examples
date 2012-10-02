@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sandbox.xtext</groupId>
+		<artifactId>org.xtext.example.mydsl.parent</artifactId>
+		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
+		<version>1.0.0.qualifier</version>
+		<relativePath>../org.xtext.example.mydsl.parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>org.xtext.example.mydsl.sdk</artifactId>
+	<packaging>eclipse-feature</packaging>
+</project>
