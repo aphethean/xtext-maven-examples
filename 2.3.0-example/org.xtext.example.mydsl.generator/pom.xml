@@ -10,24 +10,239 @@
 		<relativePath>../org.xtext.example.mydsl.parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>org.xtext.example.mydsl.generator</artifactId>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>jar</packaging>
 	<name>org.xtext.example.mydsl.MyDsl - Generator</name>
 
-	<build>
-		<resources>
-			<resource><directory>src</directory></resource>
-			<!-- Add the grammar classes to the classpath -->
-			<resource><directory>../org.xtext.example.mydsl/target/classes</directory></resource>
-		</resources>
-		<plugins>
+  	<build>
+	    <plugins>
+	        <!-- Use maven-dependency-plugin just to generate a Manifest.mf with the Class-Path -->
 			<plugin>
-				<groupId>org.fornax.toolsupport</groupId>
-				<artifactId>fornax-oaw-m2-plugin</artifactId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>build-classpath</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<workflowEngine>mwe2</workflowEngine>
-					<workflowDescriptor>src/workflow/MyDslGenerator.mwe2</workflowDescriptor>
+					<outputFilterFile>true</outputFilterFile>
+					<prefix>@jar.prefix@</prefix>
+					<!-- see copy-resources and file.separator property -->
+					<pathSeparator>@jar.separator@</pathSeparator>
+					<outputFile>${project.build.directory}/classpath.properties</outputFile>
 				</configuration>
 			</plugin>
-		</plugins>
+    
+			<!-- 
+			Seems there are bugs around the use of pathSeparator.  Essentially the pathSeparator is trimmed
+			and therefore ' ' is not used.
+			http://maven.40175.n5.nabble.com/how-to-use-space-as-pathSeparator-in-dependency-generate-resources-td510393.html
+			http://jira.codehaus.org/browse/MDEP-325
+			-->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${project.build.directory}/classes</outputDirectory>
+							<resources>          
+								<resource>
+									<directory>src/templates</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+							<filters>
+								<filter>${project.build.directory}/classpath.properties</filter>
+								<filter>${basedir}/build.properties</filter>
+							</filters>
+						</configuration>            
+					</execution>
+				</executions>
+			</plugin>
+
+    		<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>org.xtext.example.mydsl.generator.launcher.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+			<!-- 
+			Tried plenty of things to create and executable jar and none of them quite worked here.  Onejar was super easy to
+			setup, but it had a problem when I tried to execute the generator.  So we've got quite a lot of moving parts to
+			create this mygenerator.jar
+			
+			http://left.subtree.org/2008/01/24/creating-executable-jars-with-maven/ 
+			http://stackoverflow.com/questions/1757947/maven-include-dependent-libs-in-jar-without-unpacking-dependencies
+			http://stackoverflow.com/questions/7633347/maven-assembly-create-jar-with-dependency-and-class-path
+ 
+			maven-dependency-plugin:build-classpath
+			http://stackoverflow.com/questions/1510071/maven-how-can-i-add-an-arbitrary-classpath-entry-to-a-jar
+			-->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly.xml</descriptor>
+                    </descriptors>
+                    <finalName>mygenerator</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+					<attach>false</attach>
+                    <archive>
+                        <manifest>
+                            <!-- This bug means 'addClasspath' doesn't work http://jira.codehaus.org/browse/MASSEMBLY-334 -->
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>org.xtext.example.mydsl.generator.launcher.Launcher</mainClass>
+                        </manifest>
+                        <manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+  	        <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration combine.self="override">
+                </configuration>
+            </plugin>
+	    </plugins>
+  
+	    <pluginManagement>
+	    	<plugins>
+	    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+	    		<plugin>
+	    			<groupId>org.eclipse.m2e</groupId>
+	    			<artifactId>lifecycle-mapping</artifactId>
+	    			<version>1.0.0</version>
+	    			<configuration>
+	    				<lifecycleMappingMetadata>
+	    					<pluginExecutions>
+	    						<pluginExecution>
+	    							<pluginExecutionFilter>
+	    								<groupId>org.codehaus.mojo</groupId>
+	    								<artifactId>build-helper-maven-plugin</artifactId>
+	    								<versionRange>[1.3,)</versionRange>
+	    								<goals>
+	    									<goal>add-source</goal>
+	    								</goals>
+	    							</pluginExecutionFilter>
+	    							<action>
+	    								<ignore></ignore>
+	    							</action>
+	    						</pluginExecution>
+	    						<pluginExecution>
+	    							<pluginExecutionFilter>
+	    								<groupId>
+	    									org.apache.maven.plugins
+	    								</groupId>
+	    								<artifactId>
+	    									maven-dependency-plugin
+	    								</artifactId>
+	    								<versionRange>
+	    									[2.1,)
+	    								</versionRange>
+	    								<goals>
+	    									<goal>build-classpath</goal>
+	    								</goals>
+	    							</pluginExecutionFilter>
+	    							<action>
+	    								<ignore></ignore>
+	    							</action>
+	    						</pluginExecution>
+	    					</pluginExecutions>
+	    				</lifecycleMappingMetadata>
+	    			</configuration>
+	    		</plugin>
+	    	</plugins>
+	    </pluginManagement>
 	</build>
+	
+	<dependencies>
+        <dependency>
+            <groupId>com.sandbox.xtext</groupId>
+            <artifactId>org.xtext.example.mydsl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.1</version>
+		</dependency>
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.eclipse.xtend2</groupId>
+            <artifactId>org.eclipse.xtend2.standalone</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+<!-- 
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+ -->
+     </dependencies>
+		
+	<repositories>
+<!-- 	
+ <repository>
+		<id>maven.eclipse.org</id>
+		<url>http://maven.eclipse.org/nexus/content/groups/public/</url>
+</repository>
+ <repository>
+<id>fornax-platform</id>
+<name>Fornax Repository</name>
+<url>http://fornax-platform.org/nexus/content/repositories/public</url>
+<releases>
+<enabled>true</enabled>
+</releases>
+<snapshots>
+<enabled>true</enabled>
+</snapshots>
+</repository>
+ -->
+
+ 		<repository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</repository>
+	</repositories>
+
 </project>

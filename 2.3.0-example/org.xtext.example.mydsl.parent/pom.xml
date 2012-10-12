@@ -22,11 +22,6 @@
 		<module>../org.xtext.example.mydsl.generator</module>
 	</modules>
 	<build>
-		<!-- The src directory must be named as resource dir to put it on the build classpath. This is required to resolve the 
-			workflow module named in the .mwe2 file -->
-		<resources>
-			<resource><directory>src</directory></resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>

@@ -14,6 +14,11 @@
 	<name>org.xtext.example.mydsl.MyDsl - Grammar</name>
 
 	<build>
+        <!-- The src directory must be named as resource dir to put it on the build classpath. This is required to resolve the 
+            workflow module named in the .mwe2 file -->
+        <resources>
+            <resource><directory>src</directory></resource>
+        </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.fornax.toolsupport</groupId>
