@@ -206,39 +206,15 @@
             <version>3.0</version>
         </dependency>
         
+		<!-- We use this standalone version of xtend2 because it is in a public maven repo -->
         <dependency>
             <groupId>org.eclipse.xtend2</groupId>
             <artifactId>org.eclipse.xtend2.standalone</artifactId>
-            <version>2.2.0</version>
+            <version>2.2.1</version>
         </dependency>
-<!-- 
-        <dependency>
-            <groupId>org.eclipse.xtext</groupId>
-            <artifactId>org.eclipse.xtext</artifactId>
-            <version>2.0.0</version>
-        </dependency>
- -->
      </dependencies>
 		
 	<repositories>
-<!-- 	
- <repository>
-		<id>maven.eclipse.org</id>
-		<url>http://maven.eclipse.org/nexus/content/groups/public/</url>
-</repository>
- <repository>
-<id>fornax-platform</id>
-<name>Fornax Repository</name>
-<url>http://fornax-platform.org/nexus/content/repositories/public</url>
-<releases>
-<enabled>true</enabled>
-</releases>
-<snapshots>
-<enabled>true</enabled>
-</snapshots>
-</repository>
- -->
-
  		<repository>
 			<id>xtend</id>
 			<url>http://build.eclipse.org/common/xtend/maven/</url>

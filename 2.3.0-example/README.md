@@ -22,7 +22,91 @@ http://stackoverflow.com/questions/1510071/maven-how-can-i-add-an-arbitrary-clas
 
 ## Issues
 
-A few additional findings to get Maven to build an XText 2.3.0 project
+A few additional findings to get Maven to build an XText 2.3.0 project and have a standalone jar generator.
+
+
+### mygenerator.jar errors
+
+When running the standalone jar 'mygenerator.jar' you will see some errors.  These errors do not seem to affect the 
+xtend generation, but they can be resolved by removing the org.eclipse.xtend2.standalone dependency and adding the 
+org.eclipse.xtext dependencies (basically all the xtext jars you see in your Eclipse dependencies) to your pom.xml.  
+I'd put this in the example, but unfortunately I can't find a public maven repo with this dependency.  If anyone knows
+of one then please do let me know.
+
+The error:
+<pre>
+18   [main] ERROR clipse.xtext.service.CompoundModule  - java.lang.reflect.InvocationTargetException
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+        at org.eclipse.xtext.service.MethodBasedModule.invokeMethod(MethodBasedModule.java:136)
+        at org.eclipse.xtext.service.MethodBasedModule.configure(MethodBasedModule.java:49)
+        at org.eclipse.xtext.service.CompoundModule.configure(CompoundModule.java:34)
+        at org.eclipse.xtext.service.AbstractGenericModule.configure(AbstractGenericModule.java:32)
+        at org.eclipse.xtext.service.DefaultRuntimeModule.configure(DefaultRuntimeModule.java:74)
+        at org.xtext.example.mydsl.AbstractMyDslRuntimeModule.configure(AbstractMyDslRuntimeModule.java:25)
+        at com.google.inject.spi.Elements$RecordingBinder.install(Elements.java:223)
+        at com.google.inject.spi.Elements.getElements(Elements.java:101)
+        at com.google.inject.internal.InjectorShell$Builder.build(InjectorShell.java:133)
+        at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:103)
+        at com.google.inject.Guice.createInjector(Guice.java:95)
+        at com.google.inject.Guice.createInjector(Guice.java:72)
+        at com.google.inject.Guice.createInjector(Guice.java:62)
+        at org.xtext.example.mydsl.MyDslStandaloneSetupGenerated.createInjector(MyDslStandaloneSetupGenerated.java:26)
+        at org.xtext.example.mydsl.MyDslStandaloneSetupGenerated.createInjectorAndDoEMFRegistration(MyDslStandaloneSetupGenerated.java:20)
+        at org.xtext.example.mydsl.generator.launcher.Main.main(Main.java:41)
+        at org.xtext.example.mydsl.generator.launcher.Launcher.launch(Launcher.java:56)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+        at java.lang.reflect.Method.invoke(Unknown Source)
+        at org.xtext.example.mydsl.generator.launcher.Launcher.main(Launcher.java:46)
+Caused by: java.lang.reflect.InvocationTargetException
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+        at java.lang.reflect.Method.invoke(Unknown Source)
+        at org.eclipse.xtext.service.MethodBasedModule.invokeMethod(MethodBasedModule.java:134)
+        ... 21 more
+Caused by: java.lang.NoClassDefFoundError: org/eclipse/xtext/serializer/sequencer/AbstractDelegatingSemanticSequencer
+        at java.lang.ClassLoader.defineClass1(Native Method)
+        at java.lang.ClassLoader.defineClass(Unknown Source)
+        at java.security.SecureClassLoader.defineClass(Unknown Source)
+        at java.net.URLClassLoader.defineClass(Unknown Source)
+        at java.net.URLClassLoader.access$100(Unknown Source)
+        at java.net.URLClassLoader$1.run(Unknown Source)
+        at java.net.URLClassLoader$1.run(Unknown Source)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(Unknown Source)
+        at java.lang.ClassLoader.loadClass(Unknown Source)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+        at java.lang.ClassLoader.loadClass(Unknown Source)
+        at org.xtext.example.mydsl.AbstractMyDslRuntimeModule.bindISemanticSequencer(AbstractMyDslRuntimeModule.java:44)
+        ... 26 more
+Caused by: java.lang.ClassNotFoundException: org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer
+        at java.net.URLClassLoader$1.run(Unknown Source)
+        at java.net.URLClassLoader$1.run(Unknown Source)
+        at java.security.AccessController.doPrivileged(Native Method)
+        at java.net.URLClassLoader.findClass(Unknown Source)
+        at java.lang.ClassLoader.loadClass(Unknown Source)
+        at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+        at java.lang.ClassLoader.loadClass(Unknown Source)
+        ... 39 more
+Code generation finished.
+</pre>
+
+Add the org.eclipse.xtext dependency to your pom.xml:
+<pre>
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext</artifactId>
+            <version>2.3.0.v201206120633</version>
+        </dependency>
+</pre>
+
+Change to your Eclipse plugins directory and install the dependency into your local repository:
+<pre>
+mvn install:install-file -DgroupId=org.eclipse.xtext -DartifactId=org.eclipse.xtext -Dpackaging=jar -Dversion=2.3.0.v201206120633 -Dfile=org.eclipse.xtext_2.3.0.v201206120633.jar -DgeneratePom=true
+</pre>
+
 
 
 ### OSGi issues
