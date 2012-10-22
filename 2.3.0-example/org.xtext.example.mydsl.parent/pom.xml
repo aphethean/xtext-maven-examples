@@ -10,7 +10,7 @@
 	<name>org.xtext.example.mydsl.MyDsl - Parent</name>
 
 	<properties>
-		<version.tycho>0.14.1</version.tycho>
+               <version.tycho>0.16.0</version.tycho>
 		<junit-version>4.8.1</junit-version>
 	</properties>
 
@@ -106,7 +106,7 @@
 				<plugin>
 					<groupId>org.fornax.toolsupport</groupId>
 					<artifactId>fornax-oaw-m2-plugin</artifactId>
-					<version>3.3.0</version>
+                                       <version>3.4.0</version>
 					<configuration>
 						<workflowEngine>mwe2</workflowEngine>
 					</configuration>
@@ -122,7 +122,7 @@
 				<plugin>
 					<groupId>org.eclipse.xtend</groupId>
 					<artifactId>xtend-maven-plugin</artifactId>
-					<version>2.3.0</version>
+                                       <version>2.3.1</version>
 					<configuration>
 						<!-- need to prefix by basedir to generate to currently built module -->
 						<outputDirectory>${basedir}/xtend-gen</outputDirectory>
@@ -146,8 +146,8 @@
 	<repositories>
 		<!-- Repository to resolve the Eclipse Tycho dependencies --> 
 		<repository>
-			<id>p2.eclipse.indigo</id>
-			<url>http://download.eclipse.org/releases/indigo</url>
+                       <id>p2.eclipse.juno</id>
+                       <url>http://download.eclipse.org/releases/juno</url>
 			<layout>p2</layout>
 		</repository>
 		<!-- Repository to resolve the XText dependencies -->

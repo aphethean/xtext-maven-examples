@@ -18,22 +18,22 @@
 	        <!-- Use maven-dependency-plugin just to generate a Manifest.mf with the Class-Path -->
 			<plugin>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.1</version>
+                               <version>2.5.1</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>build-classpath</goal>
 						</goals>
+                                               <configuration>
+                                                       <outputFilterFile>true</outputFilterFile>
+                                                       <prefix>@jar.prefix@</prefix>
+                                                       <!-- see copy-resources and file.separator property -->
+                                                       <pathSeparator>@jar.separator@</pathSeparator>
+                                                       <outputFile>${project.build.directory}/classpath.properties</outputFile>
+                                               </configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<outputFilterFile>true</outputFilterFile>
-					<prefix>@jar.prefix@</prefix>
-					<!-- see copy-resources and file.separator property -->
-					<pathSeparator>@jar.separator@</pathSeparator>
-					<outputFile>${project.build.directory}/classpath.properties</outputFile>
-				</configuration>
 			</plugin>
     
 			<!-- 
@@ -196,21 +196,9 @@
 			<version>1.1</version>
 		</dependency>
         <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>3.0</version>
-        </dependency>
-        
-		<!-- We use this standalone version of xtend2 because it is in a public maven repo -->
-        <dependency>
-            <groupId>org.eclipse.xtend2</groupId>
-            <artifactId>org.eclipse.xtend2.standalone</artifactId>
-            <version>2.2.1</version>
+            <groupId>org.eclipse.xtend</groupId>
+            <artifactId>org.eclipse.xtend.standalone</artifactId>
+            <version>2.3.1</version>
         </dependency>
      </dependencies>
 		
