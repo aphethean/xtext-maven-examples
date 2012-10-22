@@ -33,6 +33,13 @@ Clean target will clean all the generated source (which is nice as Eclipse won't
 
 	$ mvn clean
 	
+NB - the first time you build the example it will take a little while to download all the dependencies
+<pre>
+$ time mvn clean install > build.out 
+real	25m1.109s
+user	2m56.787s
+sys	0m13.677s
+</pre>
 	
 ### Tycho moved to Eclipse
 
