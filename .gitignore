@@ -28,6 +28,5 @@
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/MyDslRuntimeModule.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/MyDslStandaloneSetup.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/formatting/MyDslFormatter.java
-/2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/generator/MyDslGenerator.xtend
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/scoping/MyDslScopeProvider.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/validation/MyDslJavaValidator.java
