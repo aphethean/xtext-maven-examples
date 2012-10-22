@@ -9,7 +9,7 @@
       <unpack>false</unpack>
       <scope>compile</scope>
       <useProjectArtifact>false</useProjectArtifact>
-      <outputDirectory></outputDirectory>
+      <outputDirectory>lib</outputDirectory>
     </dependencySet>
   </dependencySets>
   <fileSets>

@@ -93,13 +93,13 @@ public class Launcher {
         	while (entries.hasMoreElements()) {
         		JarEntry jarEntry = entries.nextElement();
         		String jarEntryName = jarEntry.getName();
-        		// only extract the jars for the MANIFEST.MF/Class-Path
-        		if (jarEntryName == null || !jarEntryName.endsWith(".jar"))
-        			continue;
                 File tmpFile = new File(tmpDir, jarEntryName);
+        		// only extract the jars for the MANIFEST.MF/Class-Path
 				if (jarEntry.isDirectory()) {
 					tmpFile.mkdir();
 			        continue;
+				} else if (jarEntryName == null || !jarEntryName.endsWith(".jar")) {
+        			continue;
 				}
 
                 inStream = jarFile.getInputStream(jarEntry);
