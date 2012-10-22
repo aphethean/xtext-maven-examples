@@ -30,11 +30,14 @@ A few additional findings to get Maven to build an XText 2.3.0 project and have 
 
 ### mygenerator.jar errors
 
-When running the standalone jar 'mygenerator.jar' you will see some errors.  These errors do not seem to affect the 
-xtend generation, but they can be resolved by removing the org.eclipse.xtend2.standalone dependency and adding the 
-org.eclipse.xtext dependencies (basically all the xtext jars you see in your Eclipse dependencies) to your pom.xml.  
-I'd put this in the example, but unfortunately I can't find a public maven repo with this dependency.  If anyone knows
-of one then please do let me know.
+When running the standalone jar 'mygenerator.jar' with version 2.2.1 of the org.eclipse.xtend2.standalone dependency
+we saw these errors below.  They did not seem to affect the xtend generation, but they can be resolved by removing 
+the org.eclipse.xtend2.standalone dependency and adding the org.eclipse.xtext dependencies (basically all the xtext jars 
+you see in your Eclipse dependencies) to your pom.xml.  
+
+A big thanks to Torsten at springide.org for a number of changes, but paticuliarly for pointing me at the 2.3.1 version
+of the XTend standalone jar.  The example has now been updated to use the 2.3.1 version of the org.eclipse.xtend.standalone
+jar which resolved the exception below.
 
 The error:
 <pre>
