@@ -1,7 +1,7 @@
 xtext-maven-examples
 ====================
 
-A few simple examples of building XText projects with Maven
+A few simple examples to show how to build XText projects with Maven / Tycho plugins.
 
 
 # Overview

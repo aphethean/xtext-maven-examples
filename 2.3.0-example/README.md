@@ -4,8 +4,10 @@ xtext-maven-examples 2.3.0-example
 ## Generator
 
 This example includes a standalone jar that can be used to generate your source.  It's basic usage is:
+<pre>
 $ cd org.xtext.example.mydsl.generator
 $ java -jar ./target/mygenerator.jar -src ./src/test/mydsl/Example.mydsl -targetdir ./target
+</pre>
 
 I've lost count of the number of ways I tried to create an executable jar and none of them quite worked here how
 I wanted.  Onejar was super easy to setup, but it had a problem when I tried to execute the generator.  So in the
