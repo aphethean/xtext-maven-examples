@@ -7,6 +7,7 @@ This example includes a standalone jar that can be used to generate your source.
 <pre>
 $ cd org.xtext.example.mydsl.generator
 $ java -jar ./target/mygenerator.jar -src ./src/test/mydsl/Example.mydsl -targetdir ./target
+$ cat ./target/Example.txt
 </pre>
 
 I've lost count of the number of ways I tried to create an executable jar and none of them quite worked here how
