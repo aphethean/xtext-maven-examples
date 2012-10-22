@@ -80,7 +80,7 @@ public class Launcher {
 */
     	// extract to the current directory of the jar so the Class-Path from manifest will resolve correctly
     	String filePath = jarPath.getPath();
-    	String path = filePath.substring(1, filePath.lastIndexOf("/"));
+       String path = filePath.substring(0, filePath.lastIndexOf("/"));
     	File tmpDir = new File(path);
         System.out.println("tmpDir " + tmpDir);
         
@@ -92,7 +92,11 @@ public class Launcher {
         	Enumeration<JarEntry> entries = jarFile.entries();
         	while (entries.hasMoreElements()) {
         		JarEntry jarEntry = entries.nextElement();
-                File tmpFile = new File(tmpDir, jarEntry.getName());
+        		String jarEntryName = jarEntry.getName();
+        		// only extract the jars for the MANIFEST.MF/Class-Path
+        		if (jarEntryName == null || !jarEntryName.endsWith(".jar"))
+        			continue;
+                File tmpFile = new File(tmpDir, jarEntryName);
 				if (jarEntry.isDirectory()) {
 					tmpFile.mkdir();
 			        continue;
