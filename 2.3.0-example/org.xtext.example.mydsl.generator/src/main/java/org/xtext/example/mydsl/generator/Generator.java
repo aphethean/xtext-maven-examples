@@ -1,4 +1,4 @@
-package org.xtext.example.mydsl.generator.launcher;
+package org.xtext.example.mydsl.generator;
 
 import java.util.List;
 

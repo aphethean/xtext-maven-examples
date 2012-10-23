@@ -1,4 +1,4 @@
-package org.xtext.example.mydsl.generator.launcher;
+package org.xtext.example.mydsl.generator;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -32,17 +32,17 @@ public class Main {
 		CommandLine line = null;
 		try {
 			line = parser.parse(options, args);
+			
+			// execute the generator
+			Injector injector = new MyDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+			Generator generator = injector.getInstance(Generator.class);
+			generator.runGenerator(line.getOptionValue(optSrc.getArgName()), line.getOptionValue(optTargetDir.getArgName()));
+
+			System.out.println("Code generation finished.");
 		} catch (final ParseException exp) {
 			System.err.println("Parsing arguments failed.  Reason: " + exp.getMessage()); 
-			wrongCall(options); return;
+			wrongCall(options);
 		}
-		
-		// execute the generator
-		Injector injector = new MyDslStandaloneSetup().createInjectorAndDoEMFRegistration();
-		Generator generator = injector.getInstance(Generator.class);
-		generator.runGenerator(line.getOptionValue(optSrc.getArgName()), line.getOptionValue(optTargetDir.getArgName()));
-
-		System.out.println("Code generation finished.");
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class Main {
 	 */
 	private static void wrongCall(final Options options) {
 		final HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("java " + Launcher.class.getName() + " [OPTIONS]",
+		formatter.printHelp("java " + Main.class.getName() + " [OPTIONS]",
 				options);
 		System.exit(-1);
 	}

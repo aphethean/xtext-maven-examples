@@ -6,207 +6,78 @@
 		<groupId>com.sandbox.xtext</groupId>
 		<artifactId>org.xtext.example.mydsl.parent</artifactId>
 		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
-		<version>1.0.0.qualifier</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../org.xtext.example.mydsl.parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>org.xtext.example.mydsl.generator</artifactId>
 	<packaging>jar</packaging>
 	<name>org.xtext.example.mydsl.MyDsl - Generator</name>
 
-  	<build>
-	    <plugins>
-	        <!-- Use maven-dependency-plugin just to generate a Manifest.mf with the Class-Path -->
+	<build>
+		<plugins>
 			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-                               <version>2.5.1</version>
-				<executions>
-					<execution>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>build-classpath</goal>
-						</goals>
-                                               <configuration>
-                                                       <outputFilterFile>true</outputFilterFile>
-                                                       <prefix>@jar.prefix@</prefix>
-                                                       <!-- see copy-resources and file.separator property -->
-                                                       <pathSeparator>@jar.separator@</pathSeparator>
-                                                       <outputFile>${project.build.directory}/classpath.properties</outputFile>
-                                               </configuration>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<forceCreation>true</forceCreation>
+				</configuration>
 			</plugin>
-    
-			<!-- 
-			Seems there are bugs around the use of pathSeparator.  Essentially the pathSeparator is trimmed
-			and therefore ' ' is not used.
-			http://maven.40175.n5.nabble.com/how-to-use-space-as-pathSeparator-in-dependency-generate-resources-td510393.html
-			http://jira.codehaus.org/browse/MDEP-325
-			-->
 			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>copy-resources</id>
-						<phase>compile</phase>
+						<phase>package</phase>
 						<goals>
-							<goal>copy-resources</goal>
+							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<encoding>UTF-8</encoding>
-							<outputDirectory>${project.build.directory}/classes</outputDirectory>
-							<resources>          
-								<resource>
-									<directory>src/templates</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-							<filters>
-								<filter>${project.build.directory}/classpath.properties</filter>
-								<filter>${basedir}/build.properties</filter>
-							</filters>
-						</configuration>            
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>org.xtext.example.mydsl.generator.Main</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-    		<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.xtext.example.mydsl.generator.launcher.Main</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
-			<!-- 
-			Tried plenty of things to create and executable jar and none of them quite worked here.  Onejar was super easy to
-			setup, but it had a problem when I tried to execute the generator.  So we've got quite a lot of moving parts to
-			create this mygenerator.jar
-			
-			http://left.subtree.org/2008/01/24/creating-executable-jars-with-maven/ 
-			http://stackoverflow.com/questions/1757947/maven-include-dependent-libs-in-jar-without-unpacking-dependencies
-			http://stackoverflow.com/questions/7633347/maven-assembly-create-jar-with-dependency-and-class-path
- 
-			maven-dependency-plugin:build-classpath
-			http://stackoverflow.com/questions/1510071/maven-how-can-i-add-an-arbitrary-classpath-entry-to-a-jar
-			-->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/assembly.xml</descriptor>
-                    </descriptors>
-                    <finalName>mygenerator</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-					<attach>false</attach>
-                    <archive>
-                        <manifest>
-                            <!-- This bug means 'addClasspath' doesn't work http://jira.codehaus.org/browse/MASSEMBLY-334 -->
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.xtext.example.mydsl.generator.launcher.Launcher</mainClass>
-                        </manifest>
-                        <manifestFile>${project.build.directory}/classes/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attached</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-  	        <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration combine.self="override">
-                </configuration>
-            </plugin>
-	    </plugins>
-  
-	    <pluginManagement>
-	    	<plugins>
-	    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-	    		<plugin>
-	    			<groupId>org.eclipse.m2e</groupId>
-	    			<artifactId>lifecycle-mapping</artifactId>
-	    			<version>1.0.0</version>
-	    			<configuration>
-	    				<lifecycleMappingMetadata>
-	    					<pluginExecutions>
-	    						<pluginExecution>
-	    							<pluginExecutionFilter>
-	    								<groupId>org.codehaus.mojo</groupId>
-	    								<artifactId>build-helper-maven-plugin</artifactId>
-	    								<versionRange>[1.3,)</versionRange>
-	    								<goals>
-	    									<goal>add-source</goal>
-	    								</goals>
-	    							</pluginExecutionFilter>
-	    							<action>
-	    								<ignore></ignore>
-	    							</action>
-	    						</pluginExecution>
-	    						<pluginExecution>
-	    							<pluginExecutionFilter>
-	    								<groupId>
-	    									org.apache.maven.plugins
-	    								</groupId>
-	    								<artifactId>
-	    									maven-dependency-plugin
-	    								</artifactId>
-	    								<versionRange>
-	    									[2.1,)
-	    								</versionRange>
-	    								<goals>
-	    									<goal>build-classpath</goal>
-	    								</goals>
-	    							</pluginExecutionFilter>
-	    							<action>
-	    								<ignore></ignore>
-	    							</action>
-	    						</pluginExecution>
-	    					</pluginExecutions>
-	    				</lifecycleMappingMetadata>
-	    			</configuration>
-	    		</plugin>
-	    	</plugins>
-	    </pluginManagement>
+		</plugins>
 	</build>
-	
+
 	<dependencies>
-        <dependency>
-            <groupId>com.sandbox.xtext</groupId>
-            <artifactId>org.xtext.example.mydsl</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>com.sandbox.xtext</groupId>
+			<artifactId>org.xtext.example.mydsl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sandbox.xtext</groupId>
+			<artifactId>org.xtext.example.mydsl.standalone</artifactId>
+			<classifier>repackaged</classifier>
+			<version>${project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>1.1</version>
 		</dependency>
-        <dependency>
-            <groupId>org.eclipse.xtend</groupId>
-            <artifactId>org.eclipse.xtend.standalone</artifactId>
-            <version>2.3.1</version>
-        </dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.antlr</groupId>
+			<artifactId>antlr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
      </dependencies>
-		
-	<repositories>
- 		<repository>
-			<id>xtend</id>
-			<url>http://build.eclipse.org/common/xtend/maven/</url>
-		</repository>
-	</repositories>
-
 </project>
