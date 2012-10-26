@@ -30,3 +30,4 @@
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/formatting/MyDslFormatter.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/scoping/MyDslScopeProvider.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/validation/MyDslJavaValidator.java
+/2.3.0-example/org.xtext.example.mydsl.standalone/target

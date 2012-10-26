@@ -6,7 +6,7 @@ xtext-maven-examples 2.3.0-example
 This example includes a standalone jar that can be used to generate your source.  It's basic usage is:
 <pre>
 $ cd org.xtext.example.mydsl.generator
-$ java -jar ./target/mygenerator.jar -src ./src/test/mydsl/Example.mydsl -targetdir ./target
+$ java -jar ./target/org.xtext.example.mydsl.generator-1.0.0-SNAPSHOT.jar -src ./src/test/mydsl/Example.mydsl -targetdir ./target
 $ cat ./target/Example.txt
 </pre>
 
