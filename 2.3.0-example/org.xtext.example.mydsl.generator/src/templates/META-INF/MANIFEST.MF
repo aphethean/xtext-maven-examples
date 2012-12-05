@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: org.xtext.example.mydsl.generator.launcher.Launcher
-Class-Path: ${classpath}
