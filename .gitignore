@@ -1,3 +1,10 @@
+target
+xtend-gen
+src-gen
+*._trace
+*.smap
+.DS_Store
+
 /2.3.0-example/org.xtext.example.mydsl.ui/plugin.xml
 /2.3.0-example/org.xtext.example.mydsl.ui/plugin.xml_gen
 /2.3.0-example/org.xtext.example.mydsl.ui/src/org/xtext/example/mydsl/ui/MyDslUiModule.java
@@ -14,9 +21,3 @@
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/formatting/MyDslFormatter.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/scoping/MyDslScopeProvider.java
 /2.3.0-example/org.xtext.example.mydsl/src/org/xtext/example/mydsl/validation/MyDslJavaValidator.java
-/2.3.0-example/org.xtext.example.mydsl.standalone/target
-/2.3.0-example/org.xtext.example.mydsl.generator/target
-/2.3.0-example/org.xtext.example.mydsl/target
-/2.3.0-example/org.xtext.example.mydsl.tests/target
-/2.3.0-example/org.xtext.example.mydsl.ui/target
-/2.3.0-example/org.xtext.example.mydsl.sdk/target
