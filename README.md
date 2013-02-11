@@ -6,7 +6,7 @@ A few simple examples to show how to build XText projects with Maven / Tycho plu
 
 # Overview
 
-These projects have been created with the simple XText DSL Project from within Eclipse.  File -> New -> Other -> XText 2.2.1 & XText 2.3.0
+This projects has been created with the simple XText DSL Project from within Eclipse.  File -> New -> Other -> XText 2.3.0
 The main point is to show how to package and build an XText DSL project with Maven and is more or less an updated version of Karsten's Blog
 entry - http://kthoms.wordpress.com/2010/08/18/building-xtext-projects-with-maven-tycho/
 
