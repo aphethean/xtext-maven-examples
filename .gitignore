@@ -4,6 +4,7 @@ src-gen
 *._trace
 *.smap
 .DS_Store
+*~
 
 /2.3.0-example/org.xtext.example.mydsl.ui/plugin.xml
 /2.3.0-example/org.xtext.example.mydsl.ui/plugin.xml_gen
