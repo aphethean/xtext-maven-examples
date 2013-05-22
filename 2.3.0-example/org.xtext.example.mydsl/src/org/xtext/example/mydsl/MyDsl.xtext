@@ -3,7 +3,11 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
 Model:
+	definitions+=ExampleCrossReference*
 	greetings+=Greeting*;
 	
 Greeting:
-	'Hello' name=ID '!';
+	'Hello' name=ID '!' exampleCrossReference=[ExampleCrossReference];
+	
+ExampleCrossReference:
+	'define -> ' name=ID;

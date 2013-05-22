@@ -1,6 +1,7 @@
 /*
  * This is an example model
  */
-Hello world!
-Hello Xtext!
-Hello Eclipse!
+define -> this
+define -> that
+
+Hello world ! this
