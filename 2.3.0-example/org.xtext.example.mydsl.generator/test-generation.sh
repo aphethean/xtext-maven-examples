@@ -11,4 +11,4 @@ echo ${JAVA_HOME:-"Please set JAVA_HOME for your environment"}
 
 #target director - generated-sources
 
-$JAVA_HOME/bin/java -jar target/org.xtext.example.mydsl.generator-1.0.0-SNAPSHOT.jar -src org.xtext.example.mydsl.generator/src/test/mydsl/Example.mydsl --targetdir generated-sources 
+$JAVA_HOME/bin/java -jar target/org.xtext.example.mydsl.generator-1.0.0-SNAPSHOT.jar -src src/test/mydsl/Example.mydsl --targetdir generated-sources 
