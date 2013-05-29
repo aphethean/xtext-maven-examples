@@ -232,7 +232,7 @@
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>13.0.1</version>
+				<version>10.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.inject</groupId>
@@ -241,8 +241,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.antlr</groupId>
-				<artifactId>antlr</artifactId>
-				<version>3.4</version>
+				<artifactId>antlr-runtime</artifactId>
+				<version>3.2</version>
 			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
