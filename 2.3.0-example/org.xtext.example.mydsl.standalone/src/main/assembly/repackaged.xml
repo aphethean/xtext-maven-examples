@@ -22,6 +22,8 @@
 				<include>org/eclipse/xtend/**</include>
 				<include>org/eclipse/xtend2/**</include>
 				<include>org/eclipse/xtext/**</include>
+				<include>com/google/common/**</include>
+                                <include>org/antlr/runtime/**</include>
 			</includes>
 		</fileSet>
 		<fileSet>
