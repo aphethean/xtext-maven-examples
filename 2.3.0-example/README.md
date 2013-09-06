@@ -27,6 +27,10 @@ http://stackoverflow.com/questions/1510071/maven-how-can-i-add-an-arbitrary-clas
 
 A few additional findings to get Maven to build an XText 2.3.0 project and have a standalone jar generator.
 
+### MANIFEST.MF dependency configuration
+
+The example was pulling down the latest xtext and this resulted in unstable builds.  http://aphethean.blogspot.co.uk/2013/09/resolving-issue-with-maven-tycho.html
+
 
 ### mygenerator.jar errors
 
